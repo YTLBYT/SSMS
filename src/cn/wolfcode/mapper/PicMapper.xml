@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="cn.wolfcode.dao.PicDao">
+    
+    <insert id="insertPic" parameterType="cn.wolfcode.entity.Picture">
+        insert into pic(picId,picName,picDes,picUrl,picUpTime,picSta,picUid)
+        values (#{picId},#{picName},#{picDes},#{picUrl},#{picUpTime},#{picSta},#{picUid});
+    </insert>
+    
+
+    
+
+
+    <select id="selectPic" parameterType="java.lang.String">
+        select * from pic where picId=#{picId};
+    </select>
+
+
+    <select id="selectAllPic" resultType="cn.wolfcode.entity.PicShow">
+        SELECT picId,picName,picDes,STATUS,picUpTime,NAME,num
+        FROM pic
+                JOIN picauthor
+                      ON pic.`picUid`=picauthor.`picUid`
+                 JOIN picstatus
+                      ON pic.`picSta`=picstatus.`picsta`
+    </select>
+
+    <select id="selectUrl" parameterType="java.lang.String" resultType="java.lang.String">
+        select picUrl from pic where picId=#{picID}
+    </select>
+
+
+
+    <delete id="deletePic" parameterType="java.lang.String">
+        delete from pic where picId=#{picId}
+    </delete>
+
+
+    <update id="updatePic" parameterType="cn.wolfcode.entity.Picture">
+        update pic
+        set picName=#{picName},
+            picDes=#{picDes},
+            picUrl=#{picUrl},
+            picUpTime=#{picUpTime},
+            picSta=#{picSta},
+            picUid=#{picUid}
+        where picId=#{picId};
+    </update>
+
+    <update id="upPicSta" parameterType="java.util.Map">
+        update pic
+        set picSta=#{picSta}
+        where picId=#{picId};
+    </update>
+
+
+    <update id="upNum" parameterType="java.util.Map">
+        update pic
+        set num=#{num}
+        where picId=#{picId};
+    </update>
+    
+
+</mapper>

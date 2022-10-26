@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wolfcode.dao.VideoDao">
+    <select id="selectVideo" parameterType="java.lang.String" resultType="cn.wolfcode.entity.T_Video">
+        select *
+        from t_video
+        where vid = #{vid}
+          and vclassify = #{vclassify}
+          and vstatues = #{vstatues}
+    </select>
+    <select id="selectVideoList" resultType="cn.wolfcode.entity.T_Video">
+        select *
+        from t_video
+    </select>
+    <insert id="insertVideo" parameterType="cn.wolfcode.entity.T_Video">
+        insert into t_video (vid, vname, vunit, vamount, vmoney, vpay,vtype,vurl,vsize,vtime)
+        values (#{vid}, #{vname}, #{vunit}, #{vamount}, #{vmoney}, #{vpay},#{vtype},#{vurl},#{vsize},#{vtime});
+    </insert>
+    <delete id="deleteVideo">
+        delete
+        from t_video
+        where vid = #{vid}
+    </delete>
+    <select id="updateVideo" resultType="cn.wolfcode.entity.T_Video" parameterType="java.lang.String">
+        select *
+        from t_video
+        where vid = #{vid}
+    </select>
+    <update id="updateVideoInput" parameterType="cn.wolfcode.entity.T_Video">
+        update t_video
+        set vname=#{vname},
+            vsize=#{vsize},
+            vstatues=#{vstatues},
+            vclassify=#{vclassify},
+            vtime=#{vtime},
+            vnumber=#{vnumber}
+        where vid = #{vid}
+    </update>
+</mapper>

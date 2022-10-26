@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wolfcode.dao.UserDao">
+   <select id="selects" resultType="java.lang.Integer">
+        select count(1) from user
+    </select>
+    <select id="selectUserByCondition" parameterType="java.lang.String" resultType="cn.wolfcode.entity.T_User">
+        select * from user where ucode=#{str} or phone=#{str}
+    </select>
+    <update id="updateUsers" parameterType="java.util.Map">
+        update user set status=#{status} where ucode=#{ucode}
+    </update>
+   <select id="select" resultType="cn.wolfcode.entity.T_User">
+      select * from user
+   </select>
+
+   <select id="selectUser" resultType="cn.wolfcode.entity.T_User">
+      select * from user where ucode=#{str} or phone=#{str}
+   </select>
+
+   <update id="updateStatus">
+      update user set status = 0 where ucode=#{str} or phone=#{str}
+   </update>
+
+   <insert id="insertUser" parameterType="cn.wolfcode.entity.T_User">
+      insert into user(id,ucode,uname,pwd,sex,birthday,address,type,phone)
+      values (#{id},#{ucode},#{uname},#{pwd},#{sex},#{birthday},#{address},#{type},#{phone})
+   </insert>
+
+   <update id="updateUser" parameterType="cn.wolfcode.entity.T_User">
+      update user
+      set
+      <if test="uname != null">
+         uname=#{uname},
+      </if>
+      <if test="address != null">
+         address=#{address},
+      </if>
+      <if test="birthday != null">
+         birthday=#{birthday},
+      </if>
+      <if test="phone != null">
+         phone=#{phone},
+      </if>
+      <if test="sex != null">
+         sex=#{sex},
+      </if>
+      <if test="type != null">
+         type=#{type},
+      </if>
+      <if test="status != null">
+         status=#{status},
+      </if>
+      <if test="id">
+         id=#{id}
+      </if>
+      where ucode = #{ucode}
+   </update>
+
+   <delete id="deleteUser">
+      delete from user where ucode=#{str} or phone=#{str}
+   </delete>
+   <select id="selectUserList" resultType="cn.wolfcode.entity.T_User">
+      select * from user
+   </select>
+
+   <select id="selectUsere" parameterType="java.lang.String" resultType="cn.wolfcode.entity.T_User">
+      select * from user where ucode=#{ucode}
+   </select>
+
+   <select id="searchUser" resultType="cn.wolfcode.entity.T_User" parameterType="java.lang.String">
+      select * from user where uname=#{uname}
+   </select>
+
+
+   <update id="addRole" parameterType="cn.wolfcode.entity.T_User">
+      insert into user (ucode,uname,id)
+         value(#{ucode},#{uname},#{id})
+
+   </update>
+
+   <update id="updateRoleAll" parameterType="cn.wolfcode.entity.T_User">
+      update user set id=#{id},status=#{status} where ucode=#{ucode}
+   </update>
+
+
+   <update id="deleteRole">
+      update user set id=0 where ucode=#{ucode}
+   </update>
+</mapper>
